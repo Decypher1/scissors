@@ -1,0 +1,4 @@
+{
+    "mongoUrl": "mongodb+srv://Decypher:Admin123@cluster0.9dqaeyg.mongodb.net/",
+    "baseUrl": "http://localhost:4000/"
+}
