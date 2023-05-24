@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
-const config = require('config');
-const db = config.get('mongoUrl');
-
+const config = require('./config');
+require("dotenv").config();
 
 
 function dbConnect(){
-    mongoose.connect(db)
+    mongoose.connect(config.mongoUrl)
 
     mongoose.connection.on("connected", () => {
         console.log('Mongodb connected successfully')
