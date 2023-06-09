@@ -13,6 +13,7 @@ app.use(express.json({extended: false}));
 //routes
 app.use("/", require('./routes/index'));
 app.use("/api/url", require('./routes/urlRoute'));
+app.use("/api/users", require('./routes/userRoute'));
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
