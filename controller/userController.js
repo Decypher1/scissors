@@ -1,8 +1,11 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const userModel = require('../models/userModel');
 //@desc     Get user data
 //@route    GET /api/users/me
 //@access   Public
 
-const getMe = async (req, res) => {
+const getMe =  async (req, res) => {
     res.json({msg: "View user data"});
 };
 
@@ -22,7 +25,27 @@ const loginUser = async (req, res) => {
 //@access   Public
 
 const registerUser = async (req, res) => {
-    res.json({msg: "Register a user"});
+    try{
+        const {name, email, password} = req.body;
+
+        if(!name || !email || !password){
+            res.status(400).json({msg: "Please enter all fields"});
+            throw new Error("Please enter all fields");
+        }
+
+        //Check if user already exists
+        const userExists = await userModel.findOne({email});
+        if(userExists){
+            res.status(400).json({msg: "User already exists"});
+            throw new Error("User already exists");
+        }
+        
+        res.json({msg: "Register a user"});
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({msg: "Server error"});
+    }  
 };
 
 module.exports = {
