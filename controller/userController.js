@@ -39,8 +39,29 @@ const registerUser = async (req, res) => {
             res.status(400).json({msg: "User already exists"});
             throw new Error("User already exists");
         }
-        
-        res.json({msg: "Register a user"});
+
+        //Hashing the user password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        //Create a new user
+        const newUser = new userModel({
+            name,
+            email,
+            password: hashedPassword
+        })
+
+        if (!newUser) {
+            throw new Error("Something went wrong while creating a new user");
+        }
+        if (newUser) {
+            res.status(201).json({
+                _id: newUser._id,
+                name: newUser.name,
+                email: newUser.email,
+                msg: "User created successfully"
+            });
+        }
     }
     catch(err){
         console.log(err);
