@@ -4,13 +4,14 @@
     "config": "^3.3.9",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.0",
     "shortid": "^2.2.16",
     "valid-url": "^1.0.9"
   },
   "name": "scissors",
-  "description": "In today’s world, it’s important to keep things as short as possible, and this applies to more concepts than you may realize. From music, speeches, to wedding receptions, brief is the new black. Scissor is a simple tool which makes URLs as short as possible. Scissor thinks it can disrupt the URL shortening industry and give the likes of bit.ly",
+  "description": "In today’s world, it’s important to keep things as short as possible, Scissor is a simple tool which makes URLs as short as possible. Scissor thinks it can disrupt the URL shortening industry and give the likes of bit.ly",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
