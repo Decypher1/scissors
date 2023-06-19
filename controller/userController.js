@@ -16,7 +16,37 @@ const getMe =  async (req, res) => {
 
 
 const loginUser = async (req, res) => {
-    res.json({msg: "Login user"});
+    const {email, password} = req.body;
+
+    //checks for user's email
+    const user = userModel.findOne({email});
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+       res.json({
+              _id: user._id,
+              name: user.name,
+              email: user.email,
+              msg: "User logged in successfully"
+         });                                                                                                    
+    } else {
+        res.status(401);
+        throw new Error("Invalid email or password");
+    }
+    
+    // if(!email || !password){
+    //     res.status(400).json({msg: "Please enter all fields"});
+    //     throw new Error("Please enter all fields");
+    // }
+
+    // if(!email.includes("@")){
+    //     res.status(400).json({msg: "Please enter a valid email"});
+    //     throw new Error("Please enter a valid email");
+    // }
+
+    // //Check if user exists
+    // if(email && password){
+
+    // }
 };
 
 
@@ -51,9 +81,10 @@ const registerUser = async (req, res) => {
             password: hashedPassword
         })
 
-        if (!newUser) {
-            throw new Error("Something went wrong while creating a new user");
-        }
+        //Save the user
+        await newUser.save();
+        res.json(newUser);
+
         if (newUser) {
             res.status(201).json({
                 _id: newUser._id,
@@ -61,6 +92,9 @@ const registerUser = async (req, res) => {
                 email: newUser.email,
                 msg: "User created successfully"
             });
+        } else {
+            res.status(401)
+            throw new Error("Invalid user data");
         }
     }
     catch(err){
@@ -73,4 +107,4 @@ module.exports = {
     registerUser,
     loginUser,
     getMe
-};
+}
