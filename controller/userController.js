@@ -16,37 +16,33 @@ const getMe =  async (req, res) => {
 
 
 const loginUser = async (req, res) => {
-    const {email, password} = req.body;
+    try {
+        const {email, password} = req.body;
 
-    //checks for user's email
-    const user = userModel.findOne({email});
+        if(!email || !password){
+            res.status(400).json({msg: "Please enter all fields"});
+            throw new Error("Please enter all fields");
+        }
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-       res.json({
-              _id: user._id,
-              name: user.name,
-              email: user.email,
-              msg: "User logged in successfully"
-         });                                                                                                    
-    } else {
-        res.status(401);
-        throw new Error("Invalid email or password");
+        //Check if user exists
+        const user = await userModel.findOne({email});
+
+        if(user) {
+            await bcrypt.compare(password, user.password);
+            res.json({
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                msg: "User logged in successfully"
+            });
+        }else {
+            res.status(401);
+            throw new Error("Invalid email or password");
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg: "Server error"});
     }
-    
-    // if(!email || !password){
-    //     res.status(400).json({msg: "Please enter all fields"});
-    //     throw new Error("Please enter all fields");
-    // }
-
-    // if(!email.includes("@")){
-    //     res.status(400).json({msg: "Please enter a valid email"});
-    //     throw new Error("Please enter a valid email");
-    // }
-
-    // //Check if user exists
-    // if(email && password){
-
-    // }
 };
 
 
