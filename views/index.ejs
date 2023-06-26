@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scissors</title>
+    <style>
+
+        /* Reset default styles */
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        line-height: 1.5;
+        }
+
+        .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        }
+
+        .error {
+        color: red;
+        }
+
+        header {
+        background-color: #333;
+        color: #fff;
+        padding: 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            margin-bottom: 40px;
+        }
+
+        #longUrlInput {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #errorMessage {
+            margin-top: 10px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #shortUrl {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #shortUrl:hover {
+            border: 1px solid #007bff;
+        }
+
+        #shortUrl:focus {
+            outline: none;
+            border: 1px solid #007bff;
+        }
+
+        #qrCode {
+            margin-top: 20px;
+        }
+
+        #qrCode img {
+            width: 100%;
+        }
+
+
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+          <h1>Scissors</h1>
+          <ul>
+            <li><a href="#">Features</a></li>
+            <li><a href="/signup">Signup</a></li>
+            <li><a href="./login">Login</a></li>
+          </ul>
+        </nav>
+    </header>
+    <section class="hero">
+        <div class="container">
+            <h2>Shorten your URLs with Scissors</h2>
+            <p>Scissors is the easiest and fastest way to shorten your long URLs.</p>
+            <p>Just paste your long URL in the box below and click Shorten.</p>
+            <p>But first!, you have to create an account and login</p>
+            <p id="shortUrl"></p>
+            <div id="qrCode"></div>       
+          <form id="shortenForm">
+            <input type="text" id="longUrlInput" placeholder="Enter your long URL here" required>
+            <button type="submit">Shorten</button>
+          </form>
+          <p id="errorMessage" class="error"></p>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+          <p>&copy; 2023 Scissors</p>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+
+</body>
+
+    
+</body>
+</html>

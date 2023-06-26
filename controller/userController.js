@@ -3,10 +3,16 @@ const bcrypt = require('bcrypt');
 const userModel = require('../models/userModel');
 //@desc     Get user data
 //@route    GET /api/users/me
-//@access   Public
+//@access   Private
 
 const getMe =  async (req, res) => {
-    res.json({msg: "View user data"});
+    const {_id, name, email} = await userModel.findById(req.user.id)
+
+    res.status(200).json({
+        id: _id,
+        name,
+        email
+    });
 };
 
 
@@ -20,7 +26,7 @@ const loginUser = async (req, res) => {
         const {email, password} = req.body;
 
         if(!email || !password){
-            res.status(400).json({msg: "Please enter all fields"});
+            res.status(400);
             throw new Error("Please enter all fields");
         }
 
@@ -33,10 +39,11 @@ const loginUser = async (req, res) => {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
+                token: generateToken(user._id),
                 msg: "User logged in successfully"
-            });
+            }).redirect("/");
         }else {
-            res.status(401);
+            res.status(401).redirect("/signup");
             throw new Error("Invalid email or password");
         }
     } catch (error) {
@@ -86,8 +93,9 @@ const registerUser = async (req, res) => {
                 _id: newUser._id,
                 name: newUser.name,
                 email: newUser.email,
+                token: generateToken(newUser._id),
                 msg: "User created successfully"
-            });
+            }).redirect("/login");
         } else {
             res.status(401)
             throw new Error("Invalid user data");
@@ -97,6 +105,13 @@ const registerUser = async (req, res) => {
         console.log(err);
         res.status(500).json({msg: "Server error"});
     }  
+};
+
+//Generate JWT token
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {
+        expiresIn: "5h"
+    });
 };
 
 module.exports = {
