@@ -35,13 +35,14 @@ const loginUser = async (req, res) => {
 
         if(user) {
             await bcrypt.compare(password, user.password);
-            res.json({
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                token: generateToken(user._id),
-                msg: "User logged in successfully"
-            }).redirect("/");
+             res.redirect('/')
+            //  .json({
+            //     _id: user._id,
+            //     name: user.name,
+            //     email: user.email,
+            //     token: generateToken(user._id),
+            //     msg: "User logged in successfully"
+            // }).
         }else {
             res.status(401).redirect("/signup");
             throw new Error("Invalid email or password");
@@ -69,8 +70,7 @@ const registerUser = async (req, res) => {
         //Check if user already exists
         const userExists = await userModel.findOne({email});
         if(userExists){
-            res.status(400).json({msg: "User already exists"});
-            throw new Error("User already exists");
+            res.redirect("/login");
         }
 
         //Hashing the user password
@@ -86,7 +86,7 @@ const registerUser = async (req, res) => {
 
         //Save the user
         await newUser.save();
-        res.json(newUser);
+        res.json(newUser).redirect("/login");
 
         if (newUser) {
             res.status(201).json({
@@ -95,7 +95,7 @@ const registerUser = async (req, res) => {
                 email: newUser.email,
                 token: generateToken(newUser._id),
                 msg: "User created successfully"
-            }).redirect("/login");
+            });
         } else {
             res.status(401)
             throw new Error("Invalid user data");
