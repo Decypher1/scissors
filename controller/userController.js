@@ -86,16 +86,23 @@ const registerUser = async (req, res) => {
 
         //Save the user
         await newUser.save();
-        res.json(newUser).redirect("/login");
+        res.redirect("/login");
 
         if (newUser) {
-            res.status(201).json({
-                _id: newUser._id,
+            res.status(201)
+            console.log({_id: newUser._id,
                 name: newUser.name,
                 email: newUser.email,
                 token: generateToken(newUser._id),
-                msg: "User created successfully"
-            });
+                msg: "User created successfully"})
+            
+            // .json({
+            //     _id: newUser._id,
+            //     name: newUser.name,
+            //     email: newUser.email,
+            //     token: generateToken(newUser._id),
+            //     msg: "User created successfully"
+            // });
         } else {
             res.status(401)
             throw new Error("Invalid user data");

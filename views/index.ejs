@@ -117,7 +117,38 @@
         #qrCode img {
             width: 100%;
         }
+        .result {
+            text-align: center;
+            border-top: 1px solid #ccc;
+            margin-top: 5px;
+        }
 
+        .list {
+            width : 800px;
+            margin: 10px auto;
+        }
+
+        .list h2{
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .list table{
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .list table thead tr th{
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .list table tbody tr td{
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
 
 
         footer {
@@ -133,7 +164,6 @@
         <nav>
           <h1>Scissors</h1>
           <ul>
-            <li><a href="#">Features</a></li>
             <li><a href="/signup">Signup</a></li>
             <li><a href="./login">Login</a></li>
           </ul>
@@ -145,12 +175,34 @@
             <p>Scissors is the easiest and fastest way to shorten your long URLs.</p>
             <p>Just paste your long URL in the box below and click Shorten.</p>
             <p>But first!, you have to create an account and login</p>
-            <p id="shortUrl"></p>
             <div id="qrCode"></div>       
           <form id="shortenForm">
             <input type="text" id="longUrlInput" placeholder="Enter your long URL here" required>
-            <button type="submit">Shorten</button>
+            <button type="submit" id="shorten">Shorten</button>
+            <div class="result">
+                <a href="#" id="shortUrl"></a>
+            </div>
           </form>
+          <div class ="list">
+            <h2>Shortened links</h2>
+            <table id="list_urls">
+                <thead>
+                    <tr>
+                        <th>Long URL</th>
+                        <th>Short URL</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>http://google.com</td>
+                        <td>http://localhost:4000/ghfagj</td>
+                        <td>0</td>
+                    </tr>
+            </table>
+          </div>
+          
+            <div id="qrCode"></div>
           <p id="errorMessage" class="error"></p>
         </div>
     </section>
@@ -160,10 +212,43 @@
         </div>
     </footer>
     
-    <script src="script.js"></script>
-
-</body>
-
-    
+    <script type="text/javascript">
+        document.querySelector('#shorten').addEventListener('click', () =>{
+            let longUrl = document.querySelector('#longUrlInput').value.trim();
+            if (longUrl.length == 0) {
+                document.querySelector('#errorMessage').innerHTML = 'Please enter a valid URL';
+            } else if (!(longUrl.startsWith('http://') || longUrl.startsWith('https://'))) {
+                document.querySelector('#errorMessage').innerHTML = 'Please enter a valid URL';
+            } else if (longUrl.length < 5) {
+                document.querySelector('#errorMessage').innerHTML = 'Please enter a valid URL';
+            } else if (longUrl.length > 2000) {
+                document.querySelector('#errorMessage').innerHTML = 'Please enter a valid URL';
+            } else if (longUrl.includes(' ')) {
+                document.querySelector('#errorMessage').innerHTML = 'Please enter a valid URL';
+            } else if (longUrl.includes('http://localhost:4000/')) {
+                document.querySelector('#errorMessage').innerHTML = 'Please enter a valid URL';
+            } else {
+                fetch('http://localhost:4000/api/shorten', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    body: JSON.stringify({longUrl: longUrl})
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        document.querySelector('#errorMessage').innerHTML = data.error;
+                    } else {
+                        document.querySelector('#shortUrl').innerHTML = data.shortUrl;
+                        // document.querySelector('#qrCode').innerHTML = `<img src="${data.qrCode}" alt="QR Code">`;
+                    }
+                })
+                .catch(err => {
+                    document.querySelector('#errorMessage').innerHTML = err;
+                })
+            }
+        })
+    </script> 
 </body>
 </html>
