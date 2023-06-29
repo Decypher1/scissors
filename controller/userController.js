@@ -35,7 +35,7 @@ const loginUser = async (req, res) => {
 
         if(user) {
             await bcrypt.compare(password, user.password);
-             res.redirect('/')
+            res.status(201).redirect('/')
             //  .json({
             //     _id: user._id,
             //     name: user.name,
@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
             //     msg: "User logged in successfully"
             // }).
         }else {
-            res.status(401).redirect("/signup");
+            res.status(401).redirect("/api/users");
             throw new Error("Invalid email or password");
         }
     } catch (error) {
@@ -63,14 +63,14 @@ const registerUser = async (req, res) => {
         const {name, email, password} = req.body;
 
         if(!name || !email || !password){
-            res.status(400).json({msg: "Please enter all fields"});
+            res.status(400)
             throw new Error("Please enter all fields");
         }
 
         //Check if user already exists
         const userExists = await userModel.findOne({email});
         if(userExists){
-            res.redirect("/login");
+            res.redirect("/api/users/login");
         }
 
         //Hashing the user password
@@ -86,7 +86,7 @@ const registerUser = async (req, res) => {
 
         //Save the user
         await newUser.save();
-        res.redirect("/login");
+        res.redirect("/api/users/login");
 
         if (newUser) {
             res.status(201)
