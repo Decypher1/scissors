@@ -3,14 +3,50 @@ require("dotenv").config();
 const dbConnect = require('./config/db');
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
-const userRoute = require('./routes/userRoute');
-const {registerUser, loginUser} = require('./controller/userController');
+const cors = require('cors');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+
+//swagger
+const swaggerOptions = {
+    swaggerDefinition: {
+        openapi: "3.0.0",
+        info: {
+            title: "URL Shortener API",
+            description: "URL Shortener API Information",
+            contact: {
+                name: "Decypher",
+                url:"https://github.com/Decypher1"
+            },
+            version: "1.0.0"
+        },
+        servers: [
+            {
+                url: "http://localhost:4000",
+                description: "Development server",
+            },
+        ],
+    },
+    apis: ["./routes/*.js"]
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+//cors
+// const corsOptions = {
+//     origin: process.env.ALLOWED_CLIENTS.split(',')
+// }
+
+
+
+//initialize express
 const app = express();
 
 //connect to database
 dbConnect();
 const PORT = process.env.PORT || 4000;
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(express.urlencoded({extended : false}));
 app.use(express.json({extended: false}));
 app.use(bodyParser.json());
@@ -42,7 +78,7 @@ app.get('/login', (req, res) => {
     res.render('login.ejs')
 });
 
-app.use("/", require('./routes/index'));
+app.use("/api", require('./routes/index'));
 app.use("/api/url", require('./routes/urlRoute'));
 app.use("/api/users", require('./routes/userRoute'));
 

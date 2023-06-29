@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
             //     msg: "User logged in successfully"
             // }).
         }else {
-            res.status(401).redirect("/api/users");
+            res.status(401).redirect("/signup");
             throw new Error("Invalid email or password");
         }
     } catch (error) {
@@ -70,7 +70,7 @@ const registerUser = async (req, res) => {
         //Check if user already exists
         const userExists = await userModel.findOne({email});
         if(userExists){
-            res.redirect("/api/users/login");
+            res.redirect("/login");
         }
 
         //Hashing the user password
@@ -86,7 +86,7 @@ const registerUser = async (req, res) => {
 
         //Save the user
         await newUser.save();
-        res.redirect("/api/users/login");
+        res.redirect("/login");
 
         if (newUser) {
             res.status(201)
@@ -117,7 +117,7 @@ const registerUser = async (req, res) => {
 //Generate JWT token
 const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {
-        expiresIn: "5h"
+        expiresIn: "1h"
     });
 };
 

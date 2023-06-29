@@ -9,6 +9,39 @@ const urlModel = require('../models/urlModel');
 //@route    POST /api/url/shorten
 //@desc     Create short URL
 
+
+/**
+ * @swagger
+ * /api/url/shorten:
+ *  post:
+ *     summary: Create short URL
+ *     description: Create short URL
+ *     requestBody:
+ *     content:
+ *     application/json:
+ *     schema:
+ *     type: object
+ *     properties:
+ *     longUrl:
+ *       type: string
+ *       description: The URL to be shortened
+ *     parameters:
+ *        - in: body
+ *          name: longUrl
+ *          description: The URL to be shortened
+ *          schema:
+ *           type: string
+ *           required: true
+ *     responses:
+ *      200:
+ *        description: Short URL created
+ *      401:
+ *        description: Invalid long URL
+ *      500:
+ *        description: Server error
+ *      
+ */
+
 router.post('/shorten', async (req, res) => {
     const {longUrl} = req.body;
     const baseUrl = config.baseUrl;

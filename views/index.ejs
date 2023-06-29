@@ -191,6 +191,7 @@
                         <th>Long URL</th>
                         <th>Short URL</th>
                         <th>Count</th>
+                        <th>QR Code</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -198,6 +199,7 @@
                         <td>http://google.com</td>
                         <td>http://localhost:4000/ghfagj</td>
                         <td>0</td>
+                        <td><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://localhost:4000/ghfagj" alt="QR Code"></td>
                     </tr>
             </table>
           </div>
@@ -241,7 +243,7 @@
                         document.querySelector('#errorMessage').innerHTML = data.error;
                     } else {
                         document.querySelector('#shortUrl').innerHTML = data.shortUrl;
-                        // document.querySelector('#qrCode').innerHTML = `<img src="${data.qrCode}" alt="QR Code">`;
+                        document.querySelector('#qrCode').innerHTML = `<img src="${data.qrCode}" alt="QR Code">`;
                     }
                 })
                 .catch(err => {
