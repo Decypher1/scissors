@@ -228,7 +228,7 @@
             } else if (longUrl.includes('http://localhost:4000/')) {
                 document.querySelector('#errorMessage').innerHTML = 'Please enter a valid URL';
             } else {
-                fetch('http://localhost:4000/api/shorten', {
+                fetch('http://localhost:4000/api/url/shorten', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json; charset=utf-8'

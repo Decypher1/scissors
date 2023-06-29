@@ -49,6 +49,4 @@ router.post('/shorten', async (req, res) => {
 
 });
 
-
-
 module.exports = router;
