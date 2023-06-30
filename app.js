@@ -3,7 +3,6 @@ require("dotenv").config();
 const dbConnect = require('./config/db');
 const rateLimit = require('express-rate-limit');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -32,10 +31,6 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-//cors
-// const corsOptions = {
-//     origin: process.env.ALLOWED_CLIENTS.split(',')
-// }
 
 
 

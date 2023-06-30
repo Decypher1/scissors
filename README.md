@@ -18,20 +18,19 @@ In today’s world, it’s important to keep things as short as possible, and th
 ### API Endpoints
 | HTTP Verbs | Endpoints | Action |
 | --- | --- | --- |
-| POST | /api/users/signup | To sign up a new user account |
+| POST | /api/users/ | To sign up a new user account |
 | POST | /api/users/login | To login an existing user account |
-| POST | /api/causes | To create a new cause |
-| GET | /api/causes | To retrieve all causes on the platform |
-| GET | /api/causes/:causeId | To retrieve details of a single cause |
-| PATCH | /api/causes/:causeId | To edit the details of a single cause |
-| DELETE | /api/causes/:causeId | To delete a single cause |
+| POST | /api/url/shorten | To shorten long url |
+| GET | / | To render the landing page |
+| GET | /api/url/{code} | To reroute the created link to the long url |
+| GET | /login | To renders login page |
+| GET | /signup | To render a signup page |
 ### Technologies Used
 * [NodeJS](https://nodejs.org/) This is a cross-platform runtime environment built on Chrome's V8 JavaScript engine used in running JavaScript codes on the server. It allows for installation and managing of dependencies and communication with databases.
 * [ExpressJS](https://www.expresjs.org/) This is a NodeJS web application framework.
 * [MongoDB](https://www.mongodb.com/) This is a free open source NOSQL document database with scalability and flexibility. Data are stored in flexible JSON-like documents.
 * [Mongoose ODM](https://mongoosejs.com/) This makes it easy to write MongoDB validation by providing a straight-forward, schema-based solution to model to application data.
 ### Authors
-* [Martins Umekwe](https://github.com/blackdevelopa)
-* ![alt text](https://avatars0.githubusercontent.com/u/29962968?s=400&u=7753a408ed02e51f88a13a5d11014484bc4d80ee&v=4)
+* [Martins Umekwe](https://github.com/decypher1)
 ### License
-This project is available for use under the MIT License.
+This project is available for use under the ISC License.
