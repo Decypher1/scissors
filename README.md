@@ -25,6 +25,7 @@ In today’s world, it’s important to keep things as short as possible, and th
 | GET | /api/url/{code} | To reroute the created link to the long url |
 | GET | /login | To renders login page |
 | GET | /signup | To render a signup page |
+| GET | /api-docs | To open the docs for the api |
 ### Technologies Used
 * [NodeJS](https://nodejs.org/) This is a cross-platform runtime environment built on Chrome's V8 JavaScript engine used in running JavaScript codes on the server. It allows for installation and managing of dependencies and communication with databases.
 * [ExpressJS](https://www.expresjs.org/) This is a NodeJS web application framework.

@@ -22,7 +22,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: "http://localhost:4000",
+                url: "https://scissor-q4k6.onrender.com/",
                 description: "Development server",
             },
         ],
