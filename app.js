@@ -66,18 +66,9 @@ const limiter = rateLimit({
 app.use(limiter);
 
 //routes
-app.get('/', (req, res) => {
-    res.render('index')
-});
-
-app.get('/signup', (req, res) => {
-    res.render('signup.ejs')
-});
-
-app.get('/login', (req, res) => {
-    res.render('login.ejs')
-});
-
+app.use('/', require('./routes/landingRoute'))
+app.use('/signup', require('./routes/landingRoute'))
+app.use('/login', require('./routes/landingRoute'))
 app.use("/api", require('./routes/index'));
 app.use("/api/url", require('./routes/urlRoute'));
 app.use("/api/users", require('./routes/userRoute'));
