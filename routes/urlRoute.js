@@ -61,12 +61,18 @@ router.post('/shorten', async (req, res) => {
                 res.json(url);
             }else{
                 const shortUrl = baseUrl + '/' + urlCode;
+                const counterClicks = urlModel.analytics.userClicks;
+                counterClicks = counterClicks + 1;
+
                 
                 url = new urlModel({
                     longUrl,
                     shortUrl,
                     urlCode,
-                    date: new Date()
+                    date: new Date(),
+                    analytics: {
+                        userClicks: counterClicks
+                    }
                 })
                 await url.save();
                 res.json(url);
