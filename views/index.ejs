@@ -251,6 +251,37 @@
                 })
             }
         })
+        (function (){
+            fetch('http://localhost:4000/api/url/list', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    document.querySelector('#errorMessage').innerHTML = data.error;
+                } else {
+                    let table = document.querySelector('#list_urls tbody');
+                    data.forEach((url) => {
+                        table.innerHTML += `
+                            <tr>
+                                <td>${url.longUrl}</td>
+                                <td>${url.shortUrl}</td>
+                                <td>${url.clicks}</td>
+                                <td><img src="${url.qrCode}" alt="QR Code"></td>
+                            </tr>
+                        `;
+                    });
+                    document.querySelector('#list_urls').classList.add('show table');
+                }
+            })
+            .catch(err => {
+                document.querySelector('#errorMessage').innerHTML = err;
+            })
+        })
+        
     </script> 
 </body>
 </html>
