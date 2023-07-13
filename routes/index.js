@@ -34,15 +34,17 @@ router.get("/:code", async (req, res) => {
         const url = await urlModel.findOne({urlCode: req.params.code});
 
         if(url) {
-            return res.redirect(url.longUrl)
+            url.analytics.userClicks = url.analytics.userClicks + 1;
+            await url.save();
+            return res.redirect(url.longUrl);
         }else{
-            return res.status(404).json({message : "Not Found"})
+            return res.status(404).json({message : "No url  Found"})
         }
     } catch (err){
         console.error(err);
         res.status(500).json('Server error');
     }
 
-})
+});
 
 module.exports = router;
